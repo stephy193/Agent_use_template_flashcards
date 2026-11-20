@@ -24,3 +24,4 @@ Beginner project. Read SPEC.md for what to build. Never edit SPEC.md.
 - After making changes, explain briefly what you changed and why,
   and tell me how to test it in the browser.
 - At the end of each step, propose an update to PROGRESS.md.
+- Do not test with node, it is not installed.
