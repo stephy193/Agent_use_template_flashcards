@@ -10,7 +10,7 @@ function renderWordPairs() {
 
   for (const wordPair of wordPairs) {
     const listItem = document.createElement("li");
-    listItem.textContent = wordPair.english + " - " + wordPair.german;
+    listItem.textContent = wordPair.german + " - " + wordPair.english;
     wordList.appendChild(listItem);
   }
 }
@@ -37,3 +37,4 @@ function addWordPair(event) {
 }
 
 wordForm.addEventListener("submit", addWordPair);
+germanInput.focus()
