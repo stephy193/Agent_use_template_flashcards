@@ -8,5 +8,7 @@
 ## Next
 
 ## Decisions & notes
+- geändert auf zuerst Deutsch und dann Englisch, damit es intuitiver ist
+- Entschieden, dass multi-select zum Löschen möglich ist, weil mir einzelne Löschen-Buttons zu jedem Wort zu unübersichtlich sind und man unabsichtlich draufklicken könnte.
 
 ## Known problems
