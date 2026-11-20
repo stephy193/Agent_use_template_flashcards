@@ -5,6 +5,7 @@
 - F1 erledigt
 - F2 erledigt
 - F3 erledigt
+- F4 erledigt
 ## Next
 
 ## Decisions & notes

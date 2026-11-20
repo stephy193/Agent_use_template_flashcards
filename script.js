@@ -3,7 +3,35 @@ const englishInput = document.getElementById("english-word");
 const germanInput = document.getElementById("german-word");
 const wordList = document.getElementById("word-list");
 const deleteSelectedButton = document.getElementById("delete-selected");
-const wordPairs = [];
+const storageKey = "vocabularyWordPairs";
+let wordPairs = loadWordPairs();
+
+// Loads saved word pairs from the browser.
+function loadWordPairs() {
+  const savedWordPairs = localStorage.getItem(storageKey);
+
+  if (savedWordPairs === null) {
+    return [];
+  }
+
+  const parsedWordPairs = JSON.parse(savedWordPairs);
+  if (!Array.isArray(parsedWordPairs)) {
+    throw new Error("Gespeicherte Vokabeln haben ein ungültiges Format.");
+  }
+
+  for (const wordPair of parsedWordPairs) {
+    if (!wordPair || typeof wordPair.english !== "string" || typeof wordPair.german !== "string") {
+      throw new Error("Gespeicherte Vokabeln haben ein ungültiges Format.");
+    }
+  }
+
+  return parsedWordPairs;
+}
+
+// Saves the given word pairs in the browser.
+function saveWordPairs(updatedWordPairs) {
+  localStorage.setItem(storageKey, JSON.stringify(updatedWordPairs));
+}
 
 // Shows all saved word pairs in the list.
 function renderWordPairs() {
@@ -35,10 +63,13 @@ function deleteSelectedWordPairs() {
     indexesToDelete.push(Number(checkbox.dataset.index));
   }
 
+  const updatedWordPairs = wordPairs.slice();
   for (let index = indexesToDelete.length - 1; index >= 0; index--) {
-    wordPairs.splice(indexesToDelete[index], 1);
+    updatedWordPairs.splice(indexesToDelete[index], 1);
   }
 
+  saveWordPairs(updatedWordPairs);
+  wordPairs = updatedWordPairs;
   renderWordPairs();
 }
 
@@ -53,11 +84,14 @@ function addWordPair(event) {
     return;
   }
 
-  wordPairs.push({
+  const updatedWordPairs = wordPairs.slice();
+  updatedWordPairs.push({
     english: englishWord,
     german: germanWord
   });
 
+  saveWordPairs(updatedWordPairs);
+  wordPairs = updatedWordPairs;
   wordForm.reset();
   renderWordPairs();
   englishInput.focus();
@@ -65,4 +99,5 @@ function addWordPair(event) {
 
 wordForm.addEventListener("submit", addWordPair);
 deleteSelectedButton.addEventListener("click", deleteSelectedWordPairs);
-germanInput.focus()
+renderWordPairs();
+germanInput.focus();
