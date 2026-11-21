@@ -1,0 +1,212 @@
+{
+  "title": "Cardiovascular Risk Quick-Check",
+  "disclaimer": "Educational prototype, not a medical device.",
+  "fields": [
+    {
+      "id": "age",
+      "label": "Age",
+      "type": "number",
+      "min": 40,
+      "max": 69,
+      "unit": "years"
+    },
+    {
+      "id": "sex",
+      "label": "Sex",
+      "type": "select",
+      "options": [
+        "female",
+        "male"
+      ]
+    },
+    {
+      "id": "systolicBp",
+      "label": "Systolic BP",
+      "type": "number",
+      "min": 90,
+      "max": 200,
+      "unit": "mmHg"
+    },
+    {
+      "id": "totalCholesterol",
+      "label": "Total cholesterol",
+      "type": "number",
+      "min": 115,
+      "max": 350,
+      "unit": "mg/dl"
+    },
+    {
+      "id": "hdl",
+      "label": "HDL cholesterol",
+      "type": "number",
+      "min": 25,
+      "max": 100,
+      "unit": "mg/dl"
+    },
+    {
+      "id": "smoker",
+      "label": "Smoker",
+      "type": "checkbox"
+    },
+    {
+      "id": "diabetes",
+      "label": "Diabetes",
+      "type": "checkbox"
+    }
+  ],
+  "algorithm": {
+    "name": "SCORE2",
+    "source": "SCORE2 working group and ESC Cardiovascular risk collaboration. Eur Heart J 2021;42:2439-2454. doi:10.1093/eurheartj/ehab309",
+    "region": "moderate",
+    "roundDecimals": 1,
+    "mgdlPerMmol": 38.67,
+    "centering": {
+      "age": {
+        "subtract": 60,
+        "divideBy": 5
+      },
+      "systolicBp": {
+        "subtract": 120,
+        "divideBy": 20
+      },
+      "totalCholesterol": {
+        "subtract": 6,
+        "divideBy": 1
+      },
+      "hdl": {
+        "subtract": 1.3,
+        "divideBy": 0.5
+      }
+    },
+    "male": {
+      "baselineSurvival": 0.9605,
+      "coefficients": {
+        "age": 0.3742,
+        "smoker": 0.6012,
+        "systolicBp": 0.2777,
+        "diabetes": 0.6457,
+        "totalCholesterol": 0.1458,
+        "hdl": -0.2698
+      },
+      "ageInteractions": {
+        "smoker": -0.0755,
+        "systolicBp": -0.0255,
+        "diabetes": -0.0983,
+        "totalCholesterol": -0.0281,
+        "hdl": 0.0426
+      }
+    },
+    "female": {
+      "baselineSurvival": 0.9776,
+      "coefficients": {
+        "age": 0.4648,
+        "smoker": 0.7744,
+        "systolicBp": 0.3131,
+        "diabetes": 0.8096,
+        "totalCholesterol": 0.1002,
+        "hdl": -0.2606
+      },
+      "ageInteractions": {
+        "smoker": -0.1088,
+        "systolicBp": -0.0277,
+        "diabetes": -0.1272,
+        "totalCholesterol": -0.0226,
+        "hdl": 0.0613
+      }
+    },
+    "regionScales": {
+      "low": {
+        "male": {
+          "scale1": -0.5699,
+          "scale2": 0.7476
+        },
+        "female": {
+          "scale1": -0.738,
+          "scale2": 0.7019
+        }
+      },
+      "moderate": {
+        "male": {
+          "scale1": -0.1565,
+          "scale2": 0.8009
+        },
+        "female": {
+          "scale1": -0.3143,
+          "scale2": 0.7701
+        }
+      },
+      "high": {
+        "male": {
+          "scale1": 0.3207,
+          "scale2": 0.936
+        },
+        "female": {
+          "scale1": 0.571,
+          "scale2": 0.9369
+        }
+      },
+      "veryHigh": {
+        "male": {
+          "scale1": 0.5836,
+          "scale2": 0.8294
+        },
+        "female": {
+          "scale1": 0.9412,
+          "scale2": 0.8329
+        }
+      }
+    }
+  },
+  "riskBar": {
+    "maxPercent": 20,
+    "scaleLabels": [
+      "0 %",
+      "5 %",
+      "10 %",
+      "20 %+"
+    ],
+    "categories": [
+      {
+        "label": "low",
+        "upTo": 5,
+        "color": "#4caf50",
+        "text": "Low (under 5 %)"
+      },
+      {
+        "label": "moderate",
+        "upTo": 10,
+        "color": "#f9c515",
+        "text": "Moderate (5-10 %)"
+      },
+      {
+        "label": "high",
+        "upTo": null,
+        "color": "#e53935",
+        "text": "High (over 10 %)"
+      }
+    ]
+  },
+  "whatIf": [
+    {
+      "id": "stopSmoking",
+      "label": "stop smoking",
+      "set": {
+        "smoker": false
+      }
+    },
+    {
+      "id": "bpBelow130",
+      "label": "BP < 130",
+      "setMax": {
+        "systolicBp": 129
+      }
+    }
+  ]
+
+  "whatIf": [
+  { "id": "stopSmoking", "label": "stop smoking", "set": { "smoker": false } },
+  { "id": "bpBelow130", "label": "BP < 130", "setMax": { "systolicBp": 129 } },
+  { "id": "cholesterol190", "label": "total cholesterol < 190", "setMax": { "totalCholesterol": 190 } },
+  { "id": "hdl55", "label": "HDL > 55", "setMin": { "hdl": 55 } }
+]
+}
