@@ -3,10 +3,38 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Website</title>
+  <title>Dairy Diary</title>
   <link rel="stylesheet" href="style.css">
   <script src="script.js" defer></script>
 </head>
 <body>
+  <main class="container">
+    <h1>Dairy Diary</h1>
+
+    <form id="entry-form">
+      <label for="entry-date">Date</label>
+      <input type="date" id="entry-date" name="entryDate" required>
+
+      <label for="entry-meal">Food/Meal</label>
+      <input type="text" id="entry-meal" name="meal" required>
+
+      <label class="checkbox-row" for="contains-lactose">
+        <input type="checkbox" id="contains-lactose" name="containsLactose">
+        Contains lactose?
+      </label>
+
+      <label class="checkbox-row" for="has-symptoms">
+        <input type="checkbox" id="has-symptoms" name="hasSymptoms">
+        Symptoms?
+      </label>
+
+      <div id="symptom-details-group">
+        <label for="symptom-details">Symptom details</label>
+        <textarea id="symptom-details" name="symptomDetails"></textarea>
+      </div>
+
+      <button type="submit">Add Entry</button>
+    </form>
+  </main>
 </body>
 </html>

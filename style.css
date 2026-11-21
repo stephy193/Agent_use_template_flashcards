@@ -8,3 +8,69 @@ body {
   background-color: #ffffff;
   color: #222222;
 }
+
+.container {
+  max-width: 600px;
+  margin: 0 auto;
+  padding: 24px;
+}
+
+h1 {
+  text-align: center;
+}
+
+form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px;
+  border: 1px solid #add8e6;
+  border-radius: 10px;
+}
+
+input,
+textarea,
+button {
+  font: inherit;
+}
+
+input[type="text"],
+input[type="date"],
+textarea {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #888888;
+  border-radius: 5px;
+}
+
+textarea {
+  min-height: 80px;
+  resize: vertical;
+}
+
+.checkbox-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+#symptom-details-group {
+  display: none;
+}
+
+#symptom-details-group.visible {
+  display: block;
+}
+
+button {
+  padding: 10px;
+  border: 0;
+  border-radius: 5px;
+  background-color: #add8e6;
+  color: #222222;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #93c8d9;
+}
