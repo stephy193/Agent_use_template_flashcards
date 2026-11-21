@@ -7,6 +7,58 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
+    <main>
+        <h1>Cardiovascular Risk Quick-Check</h1>
+
+        <form id="risk-form">
+            <div class="form-grid">
+                <div class="form-field">
+                    <label for="age">Age</label>
+                    <input type="number" id="age" name="age" min="40" max="69" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="sex">Sex</label>
+                    <select id="sex" name="sex" required>
+                        <option value="">Please choose</option>
+                        <option value="female">Female</option>
+                        <option value="male">Male</option>
+                    </select>
+                </div>
+
+                <div class="form-field">
+                    <label for="systolic-bp">Systolic Blood Pressure (mmHg)</label>
+                    <input type="number" id="systolic-bp" name="systolicBp" min="90" max="200" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="total-cholesterol">Total Cholesterol (mg/dl)</label>
+                    <input type="number" id="total-cholesterol" name="totalCholesterol" min="115" max="350" required>
+                </div>
+
+                <div class="form-field">
+                    <label for="hdl">HDL (mg/dl)</label>
+                    <input type="number" id="hdl" name="hdl" min="25" max="100" required>
+                </div>
+            </div>
+
+            <div class="checkboxes">
+                <label>
+                    <input type="checkbox" id="smoker" name="smoker">
+                    Smoker
+                </label>
+                <label>
+                    <input type="checkbox" id="diabetes" name="diabetes">
+                    Diabetes
+                </label>
+            </div>
+
+            <div class="buttons">
+                <button type="submit">Calculate</button>
+                <button type="reset">Reset</button>
+            </div>
+        </form>
+    </main>
 
     <script src="script.js"></script>
 </body>
