@@ -9,9 +9,11 @@ const entryMeal = document.getElementById("entry-meal");
 const containsLactoseCheckbox = document.getElementById("contains-lactose");
 const entryTableBody = document.getElementById("entry-table-body");
 const deleteSelectedButton = document.getElementById("delete-selected-button");
+const lactoseChartCanvas = document.getElementById("lactose-chart");
 
 const storageKey = "dairyDiaryEntries";
 let entries = loadEntries();
+let lactoseChart = null;
 
 // This shows symptom details only when symptoms are selected.
 function updateSymptomDetails() {
@@ -112,6 +114,41 @@ function countLactoseResults() {
   console.log("Lactose-containing meals:", lactoseContainingMeals);
   console.log("positive:", positive);
   console.log("negative:", negative);
+  updateLactoseChart(positive, negative);
+}
+
+// This redraws the pie chart with the latest positive and negative counts.
+function updateLactoseChart(positive, negative) {
+  if (typeof Chart === "undefined") {
+    return;
+  }
+
+  const chartData = {
+    labels: ["Positive", "Negative"],
+    datasets: [{
+      data: [positive, negative],
+      backgroundColor: ["#93c8d9", "#add8e6"],
+      borderColor: ["#ffffff", "#ffffff"]
+    }]
+  };
+
+  if (lactoseChart === null) {
+    lactoseChart = new Chart(lactoseChartCanvas, {
+      type: "pie",
+      data: chartData,
+      options: {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: "bottom"
+          }
+        }
+      }
+    });
+  } else {
+    lactoseChart.data = chartData;
+    lactoseChart.update();
+  }
 }
 
 // This removes all selected entries and updates localStorage.

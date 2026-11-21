@@ -6,8 +6,10 @@
 - F2 implemented: Entry list, newest-first sorting, and localStorage persistence.
 - F3 implemented
 - F4 implemented
+- F5 und F6 implemented
 ## Next
 
 ## Decisions & notes
-Entry List changed to a table for aesthetics
+- Entry List changed to a table for aesthetics
+- Changed color to more contrast
 ## Known problems

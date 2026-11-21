@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Dairy Diary</title>
   <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
   <script src="script.js" defer></script>
 </head>
 <body>
@@ -52,6 +53,11 @@
         </thead>
         <tbody id="entry-table-body"></tbody>
       </table>
+    </section>
+
+    <section class="chart-section">
+      <h2>Lactose and Symptoms</h2>
+      <canvas id="lactose-chart"></canvas>
     </section>
   </main>
 </body>
