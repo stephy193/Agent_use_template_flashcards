@@ -96,6 +96,57 @@ button {
     background-color: #e8dcff;
 }
 
+#risk-result {
+    margin-top: 24px;
+    padding: 20px;
+    border: 2px solid #d8c8f2;
+    border-radius: 18px;
+}
+
+#risk-result h2 {
+    margin-top: 0;
+}
+
+#risk-value {
+    margin-bottom: 6px;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+#risk-category {
+    margin-top: 0;
+}
+
+.risk-bar {
+    position: relative;
+    width: 100%;
+    height: 24px;
+    border-radius: 14px;
+    background: #ddd;
+}
+
+.risk-scale {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 8px;
+    font-size: 14px;
+    color: #555;
+}
+
+#risk-marker {
+    position: absolute;
+    top: 50%;
+    left: 0;
+    width: 36px;
+    height: 36px;
+    border: 3px solid #fff;
+    border-radius: 50%;
+    background: #fff;
+    box-shadow: 0 2px 6px rgba(34, 34, 34, 0.35);
+    transform: translate(-50%, -50%);
+    transition: left 0.2s ease;
+}
+
 button:hover {
     transform: translateY(-2px);
     box-shadow: 0 6px 12px rgba(50, 25, 80, 0.2);

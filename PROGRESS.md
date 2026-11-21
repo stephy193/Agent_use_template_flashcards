@@ -4,6 +4,7 @@
 - Basic Set Up implemented
 - F1 implemented
 - F2 implemented
+- F3 implemented
 ## Next
 
 ## Decisions & notes

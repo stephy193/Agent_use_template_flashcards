@@ -59,6 +59,21 @@
             </div>
         </form>
 
+        <section id="risk-result" aria-live="polite" hidden>
+            <h2>Your estimated 10-year risk</h2>
+            <p id="risk-value"></p>
+            <p id="risk-category"></p>
+            <div class="risk-bar" role="img" aria-label="Estimated 10-year cardiovascular risk">
+                <div id="risk-marker" aria-hidden="true"></div>
+            </div>
+            <div class="risk-scale" aria-hidden="true">
+                <span>0 %</span>
+                <span>5 %</span>
+                <span>10 %</span>
+                <span>20 %+</span>
+            </div>
+        </section>
+
         <dialog id="diabetes-dialog" aria-labelledby="diabetes-dialog-title">
             <div class="dialog-content">
                 <h2 id="diabetes-dialog-title">A quick note</h2>

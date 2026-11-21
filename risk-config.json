@@ -187,23 +187,6 @@
     ]
   },
   "whatIf": [
-    {
-      "id": "stopSmoking",
-      "label": "stop smoking",
-      "set": {
-        "smoker": false
-      }
-    },
-    {
-      "id": "bpBelow130",
-      "label": "BP < 130",
-      "setMax": {
-        "systolicBp": 129
-      }
-    }
-  ]
-
-  "whatIf": [
   { "id": "stopSmoking", "label": "stop smoking", "set": { "smoker": false } },
   { "id": "bpBelow130", "label": "BP < 130", "setMax": { "systolicBp": 129 } },
   { "id": "cholesterol190", "label": "total cholesterol < 190", "setMax": { "totalCholesterol": 190 } },
