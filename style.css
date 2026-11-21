@@ -96,3 +96,12 @@ button:hover {
   text-align: left;
   overflow-wrap: break-word;
 }
+
+#delete-selected-button {
+  margin-bottom: 10px;
+}
+
+#delete-selected-button:disabled {
+  background-color: #dddddd;
+  cursor: not-allowed;
+}

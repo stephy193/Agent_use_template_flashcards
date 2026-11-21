@@ -4,6 +4,7 @@
 - Basic-Setup für HTML, CSS und JavaScript erstellt.
 - F1 implemented
 - F2 implemented: Entry list, newest-first sorting, and localStorage persistence.
+- F3 implemented
 ## Next
 
 ## Decisions & notes

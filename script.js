@@ -8,6 +8,7 @@ const entryDate = document.getElementById("entry-date");
 const entryMeal = document.getElementById("entry-meal");
 const containsLactoseCheckbox = document.getElementById("contains-lactose");
 const entryTableBody = document.getElementById("entry-table-body");
+const deleteSelectedButton = document.getElementById("delete-selected-button");
 
 const storageKey = "dairyDiaryEntries";
 let entries = loadEntries();
@@ -63,6 +64,14 @@ function renderEntries() {
     const entry = entries[i];
     const tableRow = document.createElement("tr");
 
+    const selectCell = document.createElement("td");
+    const selectCheckbox = document.createElement("input");
+    selectCheckbox.type = "checkbox";
+    selectCheckbox.classList.add("entry-select");
+    selectCheckbox.dataset.entryId = entry.id;
+    selectCell.appendChild(selectCheckbox);
+    tableRow.appendChild(selectCell);
+
     tableRow.appendChild(createTableCell(entry.date));
     tableRow.appendChild(createTableCell(entry.meal));
     tableRow.appendChild(createTableCell(entry.containsLactose ? "Yes" : "No"));
@@ -71,6 +80,31 @@ function renderEntries() {
 
     entryTableBody.appendChild(tableRow);
   }
+
+  updateDeleteSelectedButton();
+}
+
+// This enables the delete button when entries are selected.
+function updateDeleteSelectedButton() {
+  const selectedCheckboxes = document.querySelectorAll(".entry-select:checked");
+  deleteSelectedButton.disabled = selectedCheckboxes.length === 0;
+}
+
+// This removes all selected entries and updates localStorage.
+function deleteSelectedEntries() {
+  const selectedCheckboxes = document.querySelectorAll(".entry-select:checked");
+  const selectedIds = [];
+
+  for (let i = 0; i < selectedCheckboxes.length; i++) {
+    selectedIds.push(Number(selectedCheckboxes[i].dataset.entryId));
+  }
+
+  entries = entries.filter(function (entry) {
+    return !selectedIds.includes(entry.id);
+  });
+
+  saveEntries();
+  renderEntries();
 }
 
 // This creates an entry and clears the form after submission.
@@ -101,4 +135,6 @@ function addEntry(event) {
 
 symptomsCheckbox.addEventListener("change", updateSymptomDetails);
 entryForm.addEventListener("submit", addEntry);
+entryTableBody.addEventListener("change", updateDeleteSelectedButton);
+deleteSelectedButton.addEventListener("click", deleteSelectedEntries);
 renderEntries();
