@@ -127,7 +127,7 @@ function updateLactoseChart(positive, negative) {
     labels: ["Positive", "Negative"],
     datasets: [{
       data: [positive, negative],
-      backgroundColor: ["#93c8d9", "#add8e6"],
+      backgroundColor: ["#ffa500", "#add8e6"],
       borderColor: ["#ffffff", "#ffffff"]
     }]
   };
