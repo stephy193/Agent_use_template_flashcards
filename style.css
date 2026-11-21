@@ -74,3 +74,25 @@ button {
 button:hover {
   background-color: #93c8d9;
 }
+
+.entry-section {
+  margin-top: 20px;
+}
+
+.entry-section h2 {
+  margin-bottom: 10px;
+}
+
+#entry-table {
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
+
+#entry-table th,
+#entry-table td {
+  padding: 8px;
+  border: 1px solid #add8e6;
+  text-align: left;
+  overflow-wrap: break-word;
+}
