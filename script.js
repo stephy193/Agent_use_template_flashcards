@@ -82,12 +82,36 @@ function renderEntries() {
   }
 
   updateDeleteSelectedButton();
+  countLactoseResults();
 }
 
 // This enables the delete button when entries are selected.
 function updateDeleteSelectedButton() {
   const selectedCheckboxes = document.querySelectorAll(".entry-select:checked");
   deleteSelectedButton.disabled = selectedCheckboxes.length === 0;
+}
+
+// This counts lactose-containing meals and their symptom results.
+function countLactoseResults() {
+  let lactoseContainingMeals = 0;
+  let positive = 0;
+  let negative = 0;
+
+  for (let i = 0; i < entries.length; i++) {
+    if (entries[i].containsLactose) {
+      lactoseContainingMeals++;
+
+      if (entries[i].hasSymptoms) {
+        positive++;
+      } else {
+        negative++;
+      }
+    }
+  }
+
+  console.log("Lactose-containing meals:", lactoseContainingMeals);
+  console.log("positive:", positive);
+  console.log("negative:", negative);
 }
 
 // This removes all selected entries and updates localStorage.
