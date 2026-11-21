@@ -6,6 +6,7 @@
 - F2 implemented
 - F3 implemented
 - F4 implemented
+- F5 was already implemented when F1 was implemented
 ## Next
 
 ## Decisions & notes
