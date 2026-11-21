@@ -73,41 +73,46 @@
                 <span>20 %+</span>
             </div>
 
-            <div class="what-if">
-                <h3>What if</h3>
-                <div class="checkboxes what-if-checkboxes">
-                    <label>
-                        <input type="checkbox" id="stopSmoking" name="stopSmoking">
-                        Stop smoking
-                    </label>
-                    <label>
-                        <input type="checkbox" id="bpBelow130" name="bpBelow130">
-                        Systolic Blood Pressure &lt; 130 mmHg
-                    </label>
-                    <label>
-                        <input type="checkbox" id="hdl55" name="hdl55">
-                        HDL &gt; 55mg/dl
-                    </label>
-                    <label>
-                        <input type="checkbox" id="cholesterol190" name="cholesterol190">
-                        Total Cholesterol &lt; 190 mg/dl
-                    </label>
+            <section class="what-if-feature" aria-labelledby="what-if-title">
+                <div class="what-if">
+                    <div class="what-if-heading">
+                        <h3 id="what-if-title">What if</h3>
+                    </div>
+                    <p class="what-if-description">See how a possible change could affect your risk.</p>
+                    <div class="checkboxes what-if-checkboxes">
+                        <label>
+                            <input type="checkbox" id="stopSmoking" name="stopSmoking">
+                            Stop smoking
+                        </label>
+                        <label>
+                            <input type="checkbox" id="bpBelow130" name="bpBelow130">
+                            Systolic Blood Pressure &lt; 130 mmHg
+                        </label>
+                        <label>
+                            <input type="checkbox" id="hdl55" name="hdl55">
+                            HDL &gt; 55mg/dl
+                        </label>
+                        <label>
+                            <input type="checkbox" id="cholesterol190" name="cholesterol190">
+                            Total Cholesterol &lt; 190 mg/dl
+                        </label>
+                    </div>
                 </div>
-            </div>
 
-            <section id="what-if-result" aria-live="polite" hidden>
-                <h3>Your estimated risk with these changes</h3>
-                <p id="what-if-risk-value"></p>
-                <p id="what-if-risk-category"></p>
-                <div id="what-if-risk-bar" class="risk-bar" role="img" aria-label="Estimated lower 10-year cardiovascular risk">
-                    <div id="what-if-risk-marker" aria-hidden="true"></div>
-                </div>
-                <div class="risk-scale" aria-hidden="true">
-                    <span>0 %</span>
-                    <span>5 %</span>
-                    <span>10 %</span>
-                    <span>20 %+</span>
-                </div>
+                <section id="what-if-result" aria-live="polite" hidden>
+                    <h3>Your estimated risk with these changes</h3>
+                    <p id="what-if-risk-value"></p>
+                    <p id="what-if-risk-category"></p>
+                    <div id="what-if-risk-bar" class="risk-bar" role="img" aria-label="Estimated lower 10-year cardiovascular risk">
+                        <div id="what-if-risk-marker" aria-hidden="true"></div>
+                    </div>
+                    <div class="risk-scale" aria-hidden="true">
+                        <span>0 %</span>
+                        <span>5 %</span>
+                        <span>10 %</span>
+                        <span>20 %+</span>
+                    </div>
+                </section>
             </section>
         </section>
 

@@ -151,21 +151,44 @@ button {
     transition: left 0.2s ease;
 }
 
-.what-if {
-    margin-top: 24px;
+.what-if-feature {
+    margin-top: 28px;
+    padding: 20px;
+    border: 2px dashed #b79bdc;
+    border-radius: 18px;
+    background: #f8f4ff;
 }
 
-.what-if h3,
+.what-if {
+    margin-top: 0;
+}
+
+.what-if-heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.what-if-heading h3,
 #what-if-result h3 {
-    margin-bottom: 12px;
+    margin: 0 0 12px;
+}
+
+.what-if-description {
+    margin: 0 0 4px;
+    color: #5f536f;
 }
 
 .what-if-checkboxes {
     flex-wrap: wrap;
+    margin: 16px 0 0;
 }
 
 #what-if-result {
     margin-top: 20px;
+    padding-top: 18px;
+    border-top: 1px solid #d8c8f2;
 }
 
 #what-if-risk-value {
