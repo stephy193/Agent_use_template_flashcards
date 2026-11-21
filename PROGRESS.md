@@ -5,8 +5,10 @@
 - F1 implemented
 - F2 implemented
 - F3 implemented
+- F4 implemented
 ## Next
 
 ## Decisions & notes
 - Updated the diabetes popup with a centered, styled dialog.
+- What-if checkboxes now hide when the entered value already meets the target
 ## Known problems

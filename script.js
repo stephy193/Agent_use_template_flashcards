@@ -6,6 +6,11 @@ const riskResult = document.querySelector("#risk-result");
 const riskValue = document.querySelector("#risk-value");
 const riskCategory = document.querySelector("#risk-category");
 const riskMarker = document.querySelector("#risk-marker");
+const whatIfResult = document.querySelector("#what-if-result");
+const whatIfRiskValue = document.querySelector("#what-if-risk-value");
+const whatIfRiskCategory = document.querySelector("#what-if-risk-category");
+const whatIfRiskMarker = document.querySelector("#what-if-risk-marker");
+const whatIfRiskBar = document.querySelector("#what-if-risk-bar");
 let riskConfig = null;
 
 // Load the calculation settings and coefficients from the JSON file.
@@ -74,26 +79,29 @@ function getRiskCategory(riskPercent) {
 
 // Create the coloured low, moderate, and high areas from the risk settings.
 function setRiskBarColors() {
-    const riskBar = document.querySelector(".risk-bar");
+    const riskBars = document.querySelectorAll(".risk-bar");
     const categories = riskConfig.riskBar.categories;
     const maxPercent = riskConfig.riskBar.maxPercent;
-    let gradientParts = [];
-    let startPercent = 0;
 
-    for (const category of categories) {
-        const endPercent = category.upTo === null
-            ? maxPercent
-            : Math.min(category.upTo, maxPercent);
-        const startPosition = (startPercent / maxPercent) * 100;
-        const endPosition = (endPercent / maxPercent) * 100;
-        const transparentColor = hexToTransparentColor(category.color);
+    for (const riskBar of riskBars) {
+        let gradientParts = [];
+        let startPercent = 0;
 
-        gradientParts.push(transparentColor + " " + startPosition + "%");
-        gradientParts.push(transparentColor + " " + endPosition + "%");
-        startPercent = endPercent;
+        for (const category of categories) {
+            const endPercent = category.upTo === null
+                ? maxPercent
+                : Math.min(category.upTo, maxPercent);
+            const startPosition = (startPercent / maxPercent) * 100;
+            const endPosition = (endPercent / maxPercent) * 100;
+            const transparentColor = hexToTransparentColor(category.color);
+
+            gradientParts.push(transparentColor + " " + startPosition + "%");
+            gradientParts.push(transparentColor + " " + endPosition + "%");
+            startPercent = endPercent;
+        }
+
+        riskBar.style.background = "linear-gradient(to right, " + gradientParts.join(", ") + ")";
     }
-
-    riskBar.style.background = "linear-gradient(to right, " + gradientParts.join(", ") + ")";
 }
 
 // Convert a hex color to a transparent CSS color.
@@ -106,8 +114,7 @@ function hexToTransparentColor(hexColor) {
 }
 
 // Fill the risk bar up to the marker and keep the rest transparent.
-function setRiskBarFill(riskPercent) {
-    const riskBar = document.querySelector(".risk-bar");
+function setRiskBarFill(riskPercent, riskBar) {
     const categories = riskConfig.riskBar.categories;
     const markerPercent = Math.min((riskPercent / riskConfig.riskBar.maxPercent) * 100, 100);
     let gradientParts = [];
@@ -143,15 +150,7 @@ function setRiskBarFill(riskPercent) {
 
 // Read form inputs and show the result, category, and risk marker.
 function showRiskResult() {
-    const values = {
-        age: Number(document.querySelector("#age").value),
-        sex: document.querySelector("#sex").value,
-        systolicBp: Number(document.querySelector("#systolic-bp").value),
-        totalCholesterol: Number(document.querySelector("#total-cholesterol").value),
-        hdl: Number(document.querySelector("#hdl").value),
-        smoker: document.querySelector("#smoker").checked,
-        diabetes: false
-    };
+    const values = readRiskValues();
     const riskPercent = calculateRisk(values);
     const roundedRisk = riskPercent.toFixed(riskConfig.algorithm.roundDecimals);
     const category = getRiskCategory(riskPercent);
@@ -161,13 +160,154 @@ function showRiskResult() {
     riskCategory.textContent = "Category: " + category.label;
     riskMarker.style.left = markerPercent + "%";
     riskMarker.style.backgroundColor = "#fff";
-    setRiskBarFill(riskPercent);
+    setRiskBarFill(riskPercent, document.querySelector(".risk-bar"));
     riskMarker.parentElement.setAttribute(
         "aria-label",
         "Estimated 10-year cardiovascular risk: " + roundedRisk + " percent, " + category.label
     );
     riskResult.hidden = false;
+    updateWhatIfVisibility();
     console.log("Calculated 10-year cardiovascular risk:", roundedRisk + "%");
+    updateWhatIfRisk();
+}
+
+// Read the current health values from the form.
+function readRiskValues() {
+    return {
+        age: Number(document.querySelector("#age").value),
+        sex: document.querySelector("#sex").value,
+        systolicBp: Number(document.querySelector("#systolic-bp").value),
+        totalCholesterol: Number(document.querySelector("#total-cholesterol").value),
+        hdl: Number(document.querySelector("#hdl").value),
+        smoker: document.querySelector("#smoker").checked,
+        diabetes: false
+    };
+}
+
+// Show only What if changes that can improve the entered values.
+function updateWhatIfVisibility() {
+    if (!riskConfig) {
+        return;
+    }
+
+    const values = readRiskValues();
+    const whatIfSection = document.querySelector(".what-if");
+    let hasRelevantAssumption = false;
+
+    for (const assumption of riskConfig.whatIf) {
+        const checkbox = document.querySelector("#" + assumption.id);
+        const isRelevant = isAssumptionRelevant(assumption, values);
+        checkbox.closest("label").hidden = !isRelevant;
+        if (!isRelevant) {
+            checkbox.checked = false;
+        } else {
+            hasRelevantAssumption = true;
+        }
+    }
+
+    whatIfSection.hidden = !hasRelevantAssumption;
+}
+
+// Check whether an assumption would change at least one entered value.
+function isAssumptionRelevant(assumption, values) {
+    if (assumption.set) {
+        for (const key in assumption.set) {
+            if (values[key] !== assumption.set[key]) {
+                return true;
+            }
+        }
+    }
+    if (assumption.setMax) {
+        for (const key in assumption.setMax) {
+            if (values[key] > assumption.setMax[key]) {
+                return true;
+            }
+        }
+    }
+    if (assumption.setMin) {
+        for (const key in assumption.setMin) {
+            if (values[key] < assumption.setMin[key]) {
+                return true;
+            }
+        }
+    }
+    return false;
+}
+
+// Apply all selected What if assumptions and show the lower risk bar.
+function updateWhatIfRisk() {
+    if (!riskConfig || riskResult.hidden) {
+        whatIfResult.hidden = true;
+        return;
+    }
+
+    const selectedAssumptions = getSelectedAssumptions();
+    if (selectedAssumptions.length === 0) {
+        whatIfResult.hidden = true;
+        return;
+    }
+
+    const values = readRiskValues();
+
+    for (const assumption of selectedAssumptions) {
+        const configAssumption = riskConfig.whatIf.find(function (item) {
+            return item.id === assumption.id;
+        });
+
+        if (!configAssumption) {
+            continue;
+        }
+        applyAssumption(values, configAssumption);
+    }
+
+    const riskPercent = calculateRisk(values);
+    const roundedRisk = riskPercent.toFixed(riskConfig.algorithm.roundDecimals);
+    const category = getRiskCategory(riskPercent);
+    const markerPercent = Math.min((riskPercent / riskConfig.riskBar.maxPercent) * 100, 100);
+
+    whatIfRiskValue.textContent = roundedRisk + " %";
+    whatIfRiskCategory.textContent = "Category: " + category.label;
+    whatIfRiskMarker.style.left = markerPercent + "%";
+    whatIfRiskMarker.style.backgroundColor = "#fff";
+    setRiskBarFill(riskPercent, whatIfRiskBar);
+    whatIfRiskMarker.parentElement.setAttribute(
+        "aria-label",
+        "Estimated 10-year cardiovascular risk: " + roundedRisk + " percent, " + category.label
+    );
+    whatIfResult.hidden = false;
+}
+
+// Collect the What if checkboxes that are currently selected.
+function getSelectedAssumptions() {
+    const checkboxes = document.querySelectorAll(".what-if-checkboxes input");
+    const selectedAssumptions = [];
+
+    for (const checkbox of checkboxes) {
+        if (checkbox.checked) {
+            selectedAssumptions.push({ id: checkbox.id });
+        }
+    }
+
+    return selectedAssumptions;
+}
+
+// Change one copy of the input values according to one selected assumption.
+function applyAssumption(values, assumption) {
+    if (assumption.set) {
+        for (const key in assumption.set) {
+            values[key] = assumption.set[key];
+        }
+    }
+    if (assumption.setMax) {
+        for (const key in assumption.setMax) {
+            values[key] = Math.min(values[key], assumption.setMax[key]);
+        }
+    }
+    if (assumption.setMin) {
+        for (const key in assumption.setMin) {
+            values[key] = Math.max(values[key], assumption.setMin[key]);
+        }
+    }
 }
 
 // Prevent the form from reloading the page.
@@ -200,9 +340,22 @@ function closeDiabetesMessage() {
     diabetesDialog.close();
 }
 
+// Clear the displayed risk sections when the form is reset.
+function resetRiskSections() {
+    riskResult.hidden = true;
+    whatIfResult.hidden = true;
+}
+
 riskForm.addEventListener("submit", handleFormSubmit);
+riskForm.addEventListener("reset", resetRiskSections);
 diabetesCheckbox.addEventListener("change", handleDiabetesChange);
 closeDialogButton.addEventListener("click", closeDiabetesMessage);
+
+const whatIfCheckboxes = document.querySelectorAll(".what-if-checkboxes input");
+for (const checkbox of whatIfCheckboxes) {
+    checkbox.addEventListener("change", updateWhatIfRisk);
+}
+
 loadRiskConfig().then(function () {
     setRiskBarColors();
 });
