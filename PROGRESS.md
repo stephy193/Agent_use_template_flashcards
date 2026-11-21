@@ -12,4 +12,6 @@
 ## Decisions & notes
 - Updated the diabetes popup with a centered, styled dialog.
 - What-if checkboxes now hide when the entered value already meets the target
+- Changed the What-If panel to be more separated from rest
+- added Disclaimer at the end
 ## Known problems

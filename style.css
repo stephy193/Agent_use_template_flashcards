@@ -19,6 +19,16 @@ h1 {
     box-shadow: 0 8px 18px rgba(123, 47, 247, 0.12);
 }
 
+.disclaimer {
+    margin-top: 32px;
+    padding: 16px 20px;
+    border-top: 1px solid #ddd;
+    color: #666;
+    font-size: 13px;
+    line-height: 1.5;
+    text-align: center;
+}
+
 .form-grid {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
