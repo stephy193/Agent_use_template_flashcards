@@ -101,8 +101,49 @@ button:hover {
     box-shadow: 0 6px 12px rgba(50, 25, 80, 0.2);
 }
 
+#diabetes-dialog {
+    width: min(420px, calc(100% - 32px));
+    padding: 0;
+    border: 0;
+    border-radius: 24px;
+    color: #35264d;
+    box-shadow: 0 20px 60px rgba(50, 25, 80, 0.25);
+}
+
+#diabetes-dialog::backdrop {
+    background: rgba(37, 24, 53, 0.45);
+    backdrop-filter: blur(3px);
+}
+
+.dialog-content {
+    padding: 32px;
+    text-align: center;
+    background: linear-gradient(145deg, #fff, #f8f2ff);
+}
+
+.dialog-content h2 {
+    margin: 0 0 12px;
+    color: #6740a0;
+    font-size: 24px;
+}
+
+.dialog-content p {
+    margin: 0 0 24px;
+    line-height: 1.5;
+}
+
+.dialog-content button {
+    color: #fff;
+    background: #7b2ff7;
+    box-shadow: 0 4px 10px rgba(123, 47, 247, 0.25);
+}
+
 @media (max-width: 600px) {
     .form-grid {
         grid-template-columns: 1fr;
+    }
+
+    .dialog-content {
+        padding: 28px 24px;
     }
 }
